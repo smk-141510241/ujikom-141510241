@@ -68,6 +68,8 @@ class LemburpegawaiController extends Controller
     public function edit($id)
     {
         //
+          $lemburpegawai=lembur_pegawai::find($id);
+   return view('lemburpegawai.edit',compact('lemburpegawai'));
     }
 
     /**
@@ -80,6 +82,10 @@ class LemburpegawaiController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $lemburpegawaiUpdate=Request::all();
+   $lemburpegawai=lembur_pegawai::find($id);
+   $lemburpegawai->update($lemburpegawaiUpdate);
+   return redirect('lemburpegawai');
     }
 
     /**
@@ -91,5 +97,7 @@ class LemburpegawaiController extends Controller
     public function destroy($id)
     {
         //
+          lembur_pegawai::find($id)->delete();
+        return redirect('lemburpegawai');
     }
 }

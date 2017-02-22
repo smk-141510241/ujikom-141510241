@@ -7,11 +7,12 @@ use App\jabatan;
 use App\pegawai;
 use App\User;
 use App\Form;
-use App\Input;
+use Input;
 use Validator;
+use Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
+
 
 class PegawaiController extends Controller
 {
@@ -49,9 +50,10 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $this->validate($request, [
-                'name' => 'required',
+       
+        
+         $this->validate($request, [
+               'name' => 'required',
                 'nip' => 'required|numeric|min:3|unique:pegawais',
                 'permission' => 'required|max:255',
                 'email' => 'required|email|max:255|unique:users',
@@ -65,21 +67,15 @@ class PegawaiController extends Controller
                     'password' => bcrypt($request->get('password')),
                 ]);
 
-                $file=Input::file('foto');
-                $destinationPath = public_path().'/assets/image/pegawai';
-                $filename = str_random(6).'_'.$file->getClientOriginalName();
-                $uploadsucces=$file->move($destinationPath,$filename);
-                if (Input::hasFile('foto'))
-                {
+              
                 $pegawai = new pegawai;
                 $pegawai->nip = $request->get('nip');
                 $pegawai->id_jabatan= $request->get('id_jabatan');
                 $pegawai->id_golongan = $request->get('id_golongan');
                 $pegawai->id_user = $user->id;
-                $pegawai->foto = $filename;
+                $pegawai->foto = $request->get('foto');
                 $pegawai->save();
                 return redirect('/pegawai');
-                }
 
             
     }

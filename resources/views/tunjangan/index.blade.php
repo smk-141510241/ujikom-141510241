@@ -33,7 +33,11 @@
                         <td> {{$data->jumlah_anak}} </td>
                         <td> {{$data->besaran_uang}} </td>
                         <td><a href="{{route('tunjangan.edit',$data->id)}}" class="btn btn-warning">Edit</a></td>
-                        <td><a data-toggle="modal" href="#delete{{ $data->id }}" class="btn btn-danger" title="Delete" data-toggle="tooltip">Hapus</a>
+                        <td>
+             {!! Form::open(['method' => 'DELETE', 'route'=>['tunjangan.destroy', $data->id]]) !!}
+             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+             {!! Form::close() !!}
+             </td>
                         
                     </tr>
                 </tbody>
