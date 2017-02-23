@@ -19,6 +19,16 @@ class KategoriController extends Controller
     public function index()
     {
         $kategori = kategori_lembur::with('golongan','jabatan')->get();
+        $kategori= kategori_lembur::where('kode_lembur', request('kode_lembur'))->paginate(0);
+        if(request()->has('kode_lembur'))
+        {
+            $kategori=kategori_lembur::where('kode_lembur', request('kode_lembur'))->paginate(0);
+        }
+        else
+        {
+            $kategori=kategori_lembur::paginate(3);
+        }
+
         return view ('kategori.index', compact('kategori'));
     }
 
@@ -69,7 +79,9 @@ class KategoriController extends Controller
     {
         //
         $kategori=kategori_lembur::find($id);
-   return view('kategori.edit',compact('kategori'));
+        $golongan = golongan::all();
+        $jabatan = jabatan::all();
+   return view('kategori.edit',compact('kategori','golongan','jabatan'));
     }
 
     /**

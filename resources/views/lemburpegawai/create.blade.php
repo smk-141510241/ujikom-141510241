@@ -20,7 +20,7 @@
 				</div>
       
                     <div class="control-group">
-                        <label class="control-label">Id Pegawai</label>
+                        <label class="control-label">Nama pegawai</label>
                         <div class="controls">
                             <select class="span11" name="id_pegawai">
                                 @foreach ($pegawai as $data)

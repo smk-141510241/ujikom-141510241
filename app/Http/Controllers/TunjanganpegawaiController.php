@@ -66,6 +66,8 @@ class TunjanganpegawaiController extends Controller
     public function edit($id)
     {
         //
+        $tunjanganpegawai=tunjangan_pegawai::find($id);
+        return view('tunjanganpegawai.edit',compact('tunjanganpegawai'));
     }
 
     /**
@@ -78,6 +80,10 @@ class TunjanganpegawaiController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $tunjanganpegawaiupdate=Request::all();
+   $tunjanganpegawai=tunjangan_pegawai::find($id);
+   $tunjanganpegawai->update($tunjanganpegawaiupdate);
+   return redirect('tunjanganpegawai');
     }
 
     /**

@@ -21,11 +21,16 @@
                 @foreach ($tunjanganpegawai as $data)
                 <tbody>
                     <tr> 
-                        <td> {{$id++}} </td>
-                        <td> {{$data->tunjangan->kode_tunjangan}} </td>
-                        <td> {{$data->pegawai->User->name}} </td>
+                        <td> {{$id++}} </td>    
+                        <td> {{$data->kode_tunjangan_id }} </td>
+                        <td> {{$data->user_id}} </td>
                         <td><a href="{{route('tunjanganpegawai.edit',$data->id)}}" class="btn btn-warning">Edit</a></td>
-                       
+                       <td>
+                        {!! Form::open(['method' => 'DELETE', 'route'=>['tunjanganpegawai.destroy', $data->id]]) !!}
+                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                        {!! Form::close() !!}
+                        </td>
+                         
                     </tr>
                 </tbody>
                 @endforeach

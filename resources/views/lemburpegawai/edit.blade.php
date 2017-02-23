@@ -10,13 +10,25 @@
                 <div class="panel-body">
                     {!! Form::model($lemburpegawai,['method' => 'PATCH','route'=>['lemburpegawai.update',$lemburpegawai->id]]) !!}
                 <div class="form-group">
-                    {!! Form::label('kode lembur id', 'Kode lembur id ') !!}
-                    {!! Form::text('kode_lembur_id',null,['class'=>'form-control']) !!}
+                    <label>Id Kode Lembur</label>   
+                    <div class="controls">
+                  <select class="form-control" name="kode_lembur_id">
+                                @foreach ($kategori as $data)
+                                <option value="{{ $data->id }}">{{ $data->kode_lembur }}</option>
+                                @endforeach
+                            </select>
                 </div>
-                <div class="form-group">
-                    {!! Form::label('pegawai id', 'pegawai id') !!}
-                    {!! Form::text('pegawai_id',null,['class'=>'form-control']) !!}
-                </div>
+      
+                    <div class="control-group">
+                        <label class="control-label">Id Pegawai</label>
+                        <div class="controls">
+                            <select class="span11" name="id_pegawai">
+                                @foreach ($pegawai as $data)
+                                <option value="{{ $data->id }}">{{ $data->User->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                 <div class="form-group">
                     {!! Form::label('jumlah jam', 'jumlah jam') !!}

@@ -8,15 +8,20 @@ use App\pegawai;
 use App\User;
 use App\Form;
 use Input;
+
+use Illuminate\Http\Request;
+
 use Validator;
-use Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+
 
 
 class PegawaiController extends Controller
 {
         use RegistersUsers;
+
+        
     /**
      * Display a listing of the resource.
      *
@@ -26,6 +31,15 @@ class PegawaiController extends Controller
     {
         //
         $pegawai = pegawai::all();
+        $pegawai= pegawai::where('nip', request('nip'))->paginate(100);
+        if(request()->has('nip'))
+        {
+            $pegawai=pegawai::where('nip', request('nip'))->paginate(100);
+        }
+        else
+        {
+            $pegawai=pegawai::paginate(100);
+        }
         return view ('pegawai.index', compact('pegawai'));
        
     }
@@ -52,8 +66,8 @@ class PegawaiController extends Controller
     {
        
         
-         $this->validate($request, [
-               'name' => 'required',
+     $this->validate($request, [
+                'name' => 'required',
                 'nip' => 'required|numeric|min:3|unique:pegawais',
                 'permission' => 'required|max:255',
                 'email' => 'required|email|max:255|unique:users',
@@ -67,16 +81,22 @@ class PegawaiController extends Controller
                     'password' => bcrypt($request->get('password')),
                 ]);
 
-              
-                $pegawai = new pegawai;
-                $pegawai->nip = $request->get('nip');
-                $pegawai->id_jabatan= $request->get('id_jabatan');
-                $pegawai->id_golongan = $request->get('id_golongan');
-                $pegawai->id_user = $user->id;
-                $pegawai->foto = $request->get('foto');
-                $pegawai->save();
-                return redirect('/pegawai');
+        $file = Input::file('foto');
+        $destinationPath = public_path().'/assets/image/';
+        $filename = $file->getClientOriginalName();
+        $uploadSuccess = $file->move($destinationPath, $filename);
 
+        if(Input::hasFile('foto')){
+        $pegawai= new pegawai;
+        $pegawai->nip=$request->get('nip');
+        $pegawai->id_jabatan =$request->get('id_jabatan');
+        $pegawai->id_golongan=$request->get('id_golongan');
+        $pegawai->id_user =$user->id;
+        $pegawai->foto = $filename;
+        $pegawai->save();
+
+                return redirect('/pegawai');
+}
             
     }
 
@@ -101,7 +121,9 @@ class PegawaiController extends Controller
     {
         //
         $pegawai=pegawai::find($id);
-   return view('pegawai.edit',compact('pegawai'));
+         $golongan = golongan::all();
+        $jabatan = jabatan::all();
+   return view('pegawai.edit',compact('pegawai','jabatan','golongan'));
     }
 
     /**
@@ -111,10 +133,12 @@ class PegawaiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+    public function update($id)
     {
         //
-        $pegawaiUpdate=Request::all();
+
+     $pegawaiUpdate=Input::all();
    $pegawai=pegawai::find($id);
    $pegawai->update($pegawaiUpdate);
    return redirect('pegawai');
