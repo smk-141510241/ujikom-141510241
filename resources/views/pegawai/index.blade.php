@@ -36,12 +36,10 @@
                         <td> {{$data->golongan->nama_golongan}} </td>
 
                         <td>  <img src = "{{asset('assets/image/'.$data->foto )}}" height="50" width="50"></td>
+                       
                         <td><a href="{{route('pegawai.edit',$data->id)}}" class="btn btn-warning">Edit</a></td>
-                        <td>
-             {!! Form::open(['method' => 'DELETE', 'route'=>['pegawai.destroy', $data->id]]) !!}
-             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-             {!! Form::close() !!}
-             </td>
+                        <td ><a data-toggle="modal" href="#delete{{ $data->id }}" class="btn btn-danger" title="Delete" data-toggle="tooltip">Hapus</a>
+                       @include('modals.delete', ['url' => route('pegawai.destroy', $data->id),'model' => $data])
                     </tr>
                 </tbody>
                 @endforeach

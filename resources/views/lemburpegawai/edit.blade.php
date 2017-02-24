@@ -9,6 +9,7 @@
 
                 <div class="panel-body">
                     {!! Form::model($lemburpegawai,['method' => 'PATCH','route'=>['lemburpegawai.update',$lemburpegawai->id]]) !!}
+                    
                 <div class="form-group">
                     <label>Id Kode Lembur</label>   
                     <div class="controls">

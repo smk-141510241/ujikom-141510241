@@ -13,6 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
+
 });
 
 Auth::routes();
@@ -26,3 +27,6 @@ Route::resource('/tunjangan','TunjanganController');
 Route::resource('/tunjanganpegawai','tunjanganpegawaiController');
 Route::resource('/penggajian', 'PenggajianController');
 Route::resource('/home', 'HomeController@index');
+
+
+

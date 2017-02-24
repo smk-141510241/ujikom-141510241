@@ -2,6 +2,7 @@
 @section('content')
     <h1>Edit</h1>
     {!! Form::model($pegawai,['method' => 'PATCH','route'=>['pegawai.update',$pegawai->id]]) !!}
+    
     <div class="form-group">
         {!! Form::label('nip', 'nip:') !!}
         {!! Form::text('nip',null,['class'=>'form-control']) !!}
